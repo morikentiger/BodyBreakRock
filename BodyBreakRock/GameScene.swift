@@ -14,6 +14,7 @@ class GameScene: SKScene {
     let pad = SKSpriteNode(imageNamed: "JoystickPad")
     let darkThunder = SKSpriteNode(imageNamed: "DarkThunder")
     
+    var sticActive: Bool = false
     
 //    var entities = [GKEntity]()
 //    var graphs = [String : GKGraph]()
@@ -38,7 +39,7 @@ class GameScene: SKScene {
         darkThunder.position = CGPointMake(0, 200)
         
         pad.alpha = 0.4
-        pad.alpha = 0.4
+        base.alpha = 0.4
 
 //        self.lastUpdateTime = 0
 //
@@ -65,6 +66,8 @@ class GameScene: SKScene {
     
     
     func touchDown(atPoint pos : CGPoint) {
+        
+        
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
 //            n.strokeColor = SKColor.green
@@ -73,6 +76,8 @@ class GameScene: SKScene {
     }
     
     func touchMoved(toPoint pos : CGPoint) {
+        
+        
 //        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
 //            n.position = pos
 //            n.strokeColor = SKColor.blue
@@ -89,6 +94,15 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in (touches ) {
+            let location = touch.location(in: self)
+            
+            if (CGRectContainsPoint(pad.frame, location)) {
+                sticActive = true
+            } else {
+                sticActive = false
+            }
+        }
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
@@ -97,10 +111,45 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in (touches ) {
+            let location = touch.location(in: self)
+            
+            if (sticActive == true) {
+                
+                let v = CGVector(dx: location.x - base.position.x, dy: location.y - base.position.y)
+                let angle = atan2(v.dy, v.dx)
+                
+                let deg = angle * CGFloat( 180 / M_PI)
+                //            print( deg + 180)
+                
+                let length: CGFloat = base.frame.size.height / 2
+                //let length: CGFloat = 40
+                
+                let xDist:CGFloat = sin(angle - 1.57079633) * length
+                let yDist:CGFloat = cos(angle - 1.57079633) * length
+                
+                if (CGRectContainsPoint(base.frame, location)) {
+                    pad.position = location
+                } else {
+                    pad.position = CGPointMake(base.position.x - xDist, base.position.y + yDist)
+                }
+                
+                darkThunder.zRotation = angle - 1.57079633
+                
+            }
+        }
+        
 //        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if (sticActive == true) {
+            let move:SKAction = SKAction.move(to: base.position, duration: 0.2)
+            move.timingMode = .easeOut
+            
+            pad.run(move)
+        }
+        
 //        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
