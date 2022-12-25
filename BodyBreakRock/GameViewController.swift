@@ -16,7 +16,7 @@ class GameViewController: UIViewController {
         
         let skView = self.view as! SKView
         
-        let scene = TestScene(fileNamed: "TestScene")
+        let scene = GameScene(fileNamed: "GameScene")
         
         skView.presentScene(scene)
         
