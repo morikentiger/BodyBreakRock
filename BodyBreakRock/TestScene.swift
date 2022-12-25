@@ -9,6 +9,14 @@ import Foundation
 import SpriteKit
 
 class TestScene: SKScene {
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let location = touches.first!.location(in: self)
+        let action = SKAction.move(to: CGPoint(x: location.x, y: location.y), duration: 1.0)
+        let bird = self.childNode(withName: "bird1") as? SKSpriteNode
+        bird?.run(action)
+    }
+    
 //
 //    override func sceneDidLoad() {
 //
