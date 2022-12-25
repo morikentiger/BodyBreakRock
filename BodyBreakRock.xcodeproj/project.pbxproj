@@ -15,6 +15,9 @@
 		71173BFC2957493A00419B98 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71173BFA2957493A00419B98 /* Main.storyboard */; };
 		71173BFE2957493C00419B98 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71173BFD2957493C00419B98 /* Assets.xcassets */; };
 		71173C012957493C00419B98 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 71173BFF2957493C00419B98 /* LaunchScreen.storyboard */; };
+		71173C082957544D00419B98 /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71173C072957544D00419B98 /* MyScene.sks */; };
+		71173C0A2957576200419B98 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71173C092957576200419B98 /* TestScene.swift */; };
+		71173C0C29575AE500419B98 /* TestScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71173C0B29575AE500419B98 /* TestScene.sks */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +30,9 @@
 		71173BFB2957493A00419B98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		71173BFD2957493C00419B98 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71173C002957493C00419B98 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		71173C072957544D00419B98 /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
+		71173C092957576200419B98 /* TestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
+		71173C0B29575AE500419B98 /* TestScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TestScene.sks; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +69,10 @@
 				71173BF22957493A00419B98 /* GameScene.sks */,
 				71173BF42957493A00419B98 /* Actions.sks */,
 				71173BF62957493A00419B98 /* GameScene.swift */,
+				71173C072957544D00419B98 /* MyScene.sks */,
 				71173BF82957493A00419B98 /* GameViewController.swift */,
+				71173C092957576200419B98 /* TestScene.swift */,
+				71173C0B29575AE500419B98 /* TestScene.sks */,
 				71173BFA2957493A00419B98 /* Main.storyboard */,
 				71173BFD2957493C00419B98 /* Assets.xcassets */,
 				71173BFF2957493C00419B98 /* LaunchScreen.storyboard */,
@@ -132,7 +141,9 @@
 				71173BFC2957493A00419B98 /* Main.storyboard in Resources */,
 				71173BF32957493A00419B98 /* GameScene.sks in Resources */,
 				71173BFE2957493C00419B98 /* Assets.xcassets in Resources */,
+				71173C0C29575AE500419B98 /* TestScene.sks in Resources */,
 				71173C012957493C00419B98 /* LaunchScreen.storyboard in Resources */,
+				71173C082957544D00419B98 /* MyScene.sks in Resources */,
 				71173BF52957493A00419B98 /* Actions.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +155,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71173C0A2957576200419B98 /* TestScene.swift in Sources */,
 				71173BF72957493A00419B98 /* GameScene.swift in Sources */,
 				71173BF92957493A00419B98 /* GameViewController.swift in Sources */,
 				71173BF12957493A00419B98 /* AppDelegate.swift in Sources */,
