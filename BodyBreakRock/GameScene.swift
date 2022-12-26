@@ -15,9 +15,19 @@ class GameScene: SKScene {
     let pad = SKSpriteNode(imageNamed: "JoystickPad")
     let jumpButton = SKSpriteNode(imageNamed: "JumpButton")
     let breakButton = SKSpriteNode(imageNamed: "BreakButton")
-    let darkThunder = SKSpriteNode(imageNamed: "DarkThunder")
+    let darkThunder = SKSpriteNode(imageNamed: "DarkThunderModeStanding")
     
     var sticActive: Bool = false
+    var isBreakButtonPressed = false
+    var isJumpButtonPressed = false
+    
+    var timerBreakButton: Timer?
+    var elapsedTimeBreakButton = 0.0
+    var timerJumpButton: Timer?
+    var elapsedTimeJumpButton = 0.0
+    
+    var moveBreakButton = 10.0
+    var moveJumpButton = 10.0
     
     var player:AVAudioPlayer!
     
@@ -151,7 +161,23 @@ class GameScene: SKScene {
             } else {
                 sticActive = false
             }
+            
+            if (CGRectContainsPoint(breakButton.frame, location)) {
+                isBreakButtonPressed = true
+                timerBreakButton = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimerBreakButton), userInfo: nil, repeats: true)
+            } else {
+                isBreakButtonPressed = false
+            }
+            
+            if (CGRectContainsPoint(jumpButton.frame, location)) {
+                isJumpButtonPressed = true
+                timerJumpButton = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(updateTimerJumpButton), userInfo: nil, repeats: true)
+            } else {
+                isJumpButtonPressed = false
+            }
+            
         }
+        
 //        if let label = self.label {
 //            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
 //        }
@@ -187,6 +213,8 @@ class GameScene: SKScene {
                 darkThunder.position.x -= xDist/10
                 darkThunder.position.y += yDist/10
                 
+                
+                
             }
         }
         
@@ -201,6 +229,22 @@ class GameScene: SKScene {
             pad.run(move)
         }
         
+        if isBreakButtonPressed {
+            darkThunder.position.x += moveBreakButton
+        }
+        isBreakButtonPressed = false
+        timerBreakButton?.invalidate()
+        timerBreakButton = nil
+        elapsedTimeBreakButton = 0.0
+        
+        if isJumpButtonPressed {
+            darkThunder.position.y += moveJumpButton
+        }
+        isJumpButtonPressed = false
+        timerJumpButton?.invalidate()
+        timerJumpButton = nil
+        elapsedTimeJumpButton = 0.0
+        
 //        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
@@ -208,8 +252,45 @@ class GameScene: SKScene {
 //        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
     
+    @objc func updateTimerBreakButton() {
+        elapsedTimeBreakButton += 0.1
+        if elapsedTimeBreakButton >= 0.1 {
+            moveBreakButton = 3.0
+        }
+        if elapsedTimeBreakButton >= 0.5 {
+            moveBreakButton = 60.0
+        }
+        if elapsedTimeBreakButton >= 1.5 {
+            moveBreakButton = 210.0
+        }
+    }
+    
+    @objc func updateTimerJumpButton() {
+        elapsedTimeJumpButton += 0.1
+        if elapsedTimeJumpButton >= 0.1 {
+            moveJumpButton = 3.0
+        }
+        if elapsedTimeJumpButton >= 0.5 {
+            moveJumpButton = 60.0
+        }
+        if elapsedTimeJumpButton >= 1.5 {
+            moveJumpButton = 210.0
+        }
+    }
     
     override func update(_ currentTime: TimeInterval) {
+        if !(darkThunder.position.x < self.size.width/2 - darkThunder.size.width/2) {
+            darkThunder.position.x = self.size.width/2 - darkThunder.size.width/2
+        }
+        if !(darkThunder.position.x > -self.size.width/2 + darkThunder.size.width/2) {
+            darkThunder.position.x = -self.size.width/2 + darkThunder.size.width/2
+        }
+        if !(darkThunder.position.y < self.size.height/2 - darkThunder.size.height/2) {
+            darkThunder.position.y = self.size.height/2 - darkThunder.size.height/2
+        }
+        if !(darkThunder.position.y > -self.size.height/2 + darkThunder.size.height/2) {
+            darkThunder.position.y = -self.size.height/2 + darkThunder.size.height/2
+        }
 //        // Called before each frame is rendered
 //
 //        // Initialize _lastUpdateTime if it has not already been
