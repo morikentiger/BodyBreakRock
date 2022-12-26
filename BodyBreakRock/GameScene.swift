@@ -29,6 +29,8 @@ class GameScene: SKScene {
     var moveBreakButton = 10.0
     var moveJumpButton = 10.0
     
+    var chargeLevel = 0
+    
     var player:AVAudioPlayer!
     
 //    let player = AVQueuePlayer()
@@ -57,7 +59,7 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         
-        self.backgroundColor = SKColor.yellow
+        self.backgroundColor = SKColor.brown
         
         self.anchorPoint = CGPointMake(0.5, 0.5)
         
@@ -194,7 +196,7 @@ class GameScene: SKScene {
                 let v = CGVector(dx: location.x - base.position.x, dy: location.y - base.position.y)
                 let angle = atan2(v.dy, v.dx)
                 
-                let deg = angle * CGFloat( 180 / M_PI)
+//                let deg = angle * CGFloat( 180 / M_PI)
                 //            print( deg + 180)
                 
                 let length: CGFloat = base.frame.size.height / 2
@@ -210,10 +212,8 @@ class GameScene: SKScene {
                 }
                 
 //                darkThunder.zRotation = angle - 1.57079633
-                darkThunder.position.x -= xDist/10
-                darkThunder.position.y += yDist/10
-                
-                
+                darkThunder.position.x -= xDist/5
+                darkThunder.position.y += yDist/5
                 
             }
         }
@@ -228,6 +228,8 @@ class GameScene: SKScene {
             
             pad.run(move)
         }
+        
+        darkThunder.removeAllChildren()
         
         if isBreakButtonPressed {
             darkThunder.position.x += moveBreakButton
@@ -256,13 +258,45 @@ class GameScene: SKScene {
         elapsedTimeBreakButton += 0.1
         if elapsedTimeBreakButton >= 0.1 {
             moveBreakButton = 3.0
+            chargeLevel = 1
         }
         if elapsedTimeBreakButton >= 0.5 {
             moveBreakButton = 60.0
+            chargeLevel = 2
         }
         if elapsedTimeBreakButton >= 1.5 {
             moveBreakButton = 210.0
+            chargeLevel = 3
         }
+    }
+    
+    func updateChargeEffect() {
+        darkThunder.removeAllChildren()
+        if chargeLevel >= 1 {
+            guard let chargeParticleBlue = SKEmitterNode(fileNamed: "ChargeParticleBlue.sks") else {
+                return
+            }
+            chargeParticleBlue.position = CGPointMake(0, 0)
+            chargeParticleBlue.targetNode = darkThunder
+            darkThunder.addChild(chargeParticleBlue)
+        }
+        if chargeLevel >= 2 {
+            guard let chargeParticleYellow = SKEmitterNode(fileNamed: "ChargeParticleYellow.sks") else {
+                return
+            }
+            chargeParticleYellow.position = CGPointMake(0, 0)
+            chargeParticleYellow.targetNode = darkThunder
+            darkThunder.addChild(chargeParticleYellow)
+        }
+        if chargeLevel >= 3 {
+            guard let chargeParticleRed = SKEmitterNode(fileNamed: "ChargeParticleRed.sks") else {
+                return
+            }
+            chargeParticleRed.position = CGPointMake(0, 0)
+            chargeParticleRed.targetNode = darkThunder
+            darkThunder.addChild(chargeParticleRed)
+        }
+        chargeLevel = 0
     }
     
     @objc func updateTimerJumpButton() {
@@ -278,7 +312,7 @@ class GameScene: SKScene {
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
+    func stayOnScreen() {
         if !(darkThunder.position.x < self.size.width/2 - darkThunder.size.width/2) {
             darkThunder.position.x = self.size.width/2 - darkThunder.size.width/2
         }
@@ -291,6 +325,14 @@ class GameScene: SKScene {
         if !(darkThunder.position.y > -self.size.height/2 + darkThunder.size.height/2) {
             darkThunder.position.y = -self.size.height/2 + darkThunder.size.height/2
         }
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        
+        updateChargeEffect()
+        
+        stayOnScreen()
+        
 //        // Called before each frame is rendered
 //
 //        // Initialize _lastUpdateTime if it has not already been
