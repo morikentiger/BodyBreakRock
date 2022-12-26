@@ -18,6 +18,7 @@
 		71173C082957544D00419B98 /* MyScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71173C072957544D00419B98 /* MyScene.sks */; };
 		71173C0A2957576200419B98 /* TestScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71173C092957576200419B98 /* TestScene.swift */; };
 		71173C0C29575AE500419B98 /* TestScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71173C0B29575AE500419B98 /* TestScene.sks */; };
+		71173C102957FBB400419B98 /* BecomingTense.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 71173C0F2957FBB400419B98 /* BecomingTense.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		71173C072957544D00419B98 /* MyScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyScene.sks; sourceTree = "<group>"; };
 		71173C092957576200419B98 /* TestScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestScene.swift; sourceTree = "<group>"; };
 		71173C0B29575AE500419B98 /* TestScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = TestScene.sks; sourceTree = "<group>"; };
+		71173C0F2957FBB400419B98 /* BecomingTense.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BecomingTense.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				71173BFA2957493A00419B98 /* Main.storyboard */,
 				71173BFD2957493C00419B98 /* Assets.xcassets */,
 				71173BFF2957493C00419B98 /* LaunchScreen.storyboard */,
+				71173C0F2957FBB400419B98 /* BecomingTense.mp3 */,
 			);
 			path = BodyBreakRock;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 				71173BFE2957493C00419B98 /* Assets.xcassets in Resources */,
 				71173C0C29575AE500419B98 /* TestScene.sks in Resources */,
 				71173C012957493C00419B98 /* LaunchScreen.storyboard in Resources */,
+				71173C102957FBB400419B98 /* BecomingTense.mp3 in Resources */,
 				71173C082957544D00419B98 /* MyScene.sks in Resources */,
 				71173BF52957493A00419B98 /* Actions.sks in Resources */,
 			);
