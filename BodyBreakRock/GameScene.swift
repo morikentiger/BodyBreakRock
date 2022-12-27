@@ -36,6 +36,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     let darkThunder = SKSpriteNode(imageNamed: "DarkThunderModeStanding")
     
+    var score = 0
+    
     var blocks: [SKSpriteNode] = []
     
     let stage = SKNode()
@@ -73,14 +75,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var player:AVAudioPlayer!
     
     let labelIsBreakButtonPressed = SKLabelNode(fontNamed: "Chalkduster")
-    
+    let labelScore = SKLabelNode(fontNamed: "Chalkduster")
+
     override func sceneDidLoad() {
         
         labelIsBreakButtonPressed.text = "nil"
         labelIsBreakButtonPressed.fontSize = 39
         labelIsBreakButtonPressed.fontColor = SKColor.red
         labelIsBreakButtonPressed.position = CGPoint(x: 0 ,y: 0)
-        addChild(labelIsBreakButtonPressed)
+//        addChild(labelIsBreakButtonPressed)
+        
+        
         
         self.physicsWorld.contactDelegate = self
         
@@ -118,17 +123,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(stage)
         
+        labelScore.text = "nil"
+        labelScore.fontSize = 39
+        labelScore.fontColor = SKColor.red
+        labelScore.position = CGPoint(x: 0 ,y: 300)
+        addChild(labelScore)
+        
         self.addChild(base)
         base.position = CGPointMake(-100, -250)
         
         self.addChild(pad)
         pad.position = base.position
+        pad.colorBlendFactor = 1.0
+        pad.color = .red
         
-        self.addChild(jumpButton)
+//        self.addChild(jumpButton)
         jumpButton.position = CGPointMake(75, -275)
         
         self.addChild(breakButton)
-        breakButton.position = CGPointMake(125, -225)
+        breakButton.position = CGPointMake(100, -250)
+        breakButton.colorBlendFactor = 1.0
+        breakButton.color = .red
         
         self.addChild(cursor)
         cursor.isHidden = true
@@ -388,6 +403,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 blockA.removeFromParent()
 //                blockB.removeFromParent()
+                score += 100
                 
             }
 //        }
@@ -439,7 +455,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         updateChargeEffect()
         stayOnScreen()
         
-        labelIsBreakButtonPressed.text = "\(isBreakButtonPressed)"
+//        labelIsBreakButtonPressed.text = "\(isBreakButtonPressed)"
+        labelScore.text = "Score:\(score)"
+    
     }
 }
 
