@@ -367,14 +367,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBegin(_ contact: SKPhysicsContact) {
         
-        for block in blocks {
+//        for block in blocks {
             let bodyA = contact.bodyA
             let bodyB = contact.bodyB
             
+            
+            
             if bodyA.categoryBitMask == PhysicsCategory.Player && bodyB.categoryBitMask == PhysicsCategory.Block || bodyA.categoryBitMask == PhysicsCategory.Block && bodyB.categoryBitMask == PhysicsCategory.Player {
-                block.removeFromParent()
+//                block.removeFromParent()
+                let blockA: SKSpriteNode
+//                let blockB: SKSpriteNode
+                
+                if bodyA.categoryBitMask == PhysicsCategory.Block {
+                    blockA = bodyA.node as! SKSpriteNode
+//                    blockB = bodyB.node as! SKSpriteNode
+                } else {
+                    blockA = bodyB.node as! SKSpriteNode
+//                    blockB = bodyA.node as! SKSpriteNode
+                }
+                
+                blockA.removeFromParent()
+//                blockB.removeFromParent()
+                
             }
-        }
+//        }
         // 衝突が発生したときに呼ばれるメソッド
 //        // 衝突したオブジェクトを取得する
 //        let objectA = contact.bodyA.node
