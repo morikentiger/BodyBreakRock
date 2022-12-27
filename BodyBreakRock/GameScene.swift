@@ -39,6 +39,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var blocks: [SKSpriteNode] = []
     
     let stage = SKNode()
+    
+    struct PhysicsCategory {
+        static let Player: UInt32 = 0x1 << 0
+        static let Block: UInt32 = 0x1 << 1
+    }
 
 //    let block = SKSpriteNode(imageNamed: "block")
 //                 SKSpriteNode(imageNamed: "block"),
@@ -130,7 +135,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         self.addChild(darkThunder)
-        darkThunder.position = CGPointMake(0, 200)
+        darkThunder.position = CGPointMake(0, 300)
         
         pad.alpha = 0.4
         base.alpha = 0.4
@@ -149,9 +154,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 
         // プレイヤーと衝突したときに通知を受け取るカテゴリーを設定する
-        darkThunder.physicsBody?.collisionBitMask = 0b0100 // 0100
-        darkThunder.physicsBody?.categoryBitMask = 0b0010 // 0010
-        darkThunder.physicsBody?.contactTestBitMask = 0b0001 // 0001
+        darkThunder.physicsBody?.collisionBitMask = PhysicsCategory.Player
+        darkThunder.physicsBody?.categoryBitMask = PhysicsCategory.Player
+        darkThunder.physicsBody?.contactTestBitMask = PhysicsCategory.Player
         
         let url = Bundle.main.bundleURL.appendingPathComponent("BecomingTense.mp3")
         do {
@@ -354,9 +359,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didSimulatePhysics() {
         for block in blocks {
             block.physicsBody = SKPhysicsBody(rectangleOf: block.size)
-            block.physicsBody?.categoryBitMask = darkThunder.physicsBody!.categoryBitMask
-            block.physicsBody?.collisionBitMask = darkThunder.physicsBody!.collisionBitMask
-            block.physicsBody?.contactTestBitMask = darkThunder.physicsBody!.contactTestBitMask
+            block.physicsBody?.categoryBitMask = PhysicsCategory.Block
+            block.physicsBody?.collisionBitMask = PhysicsCategory.Player
+            block.physicsBody?.contactTestBitMask = PhysicsCategory.Player
         }
     }
     
@@ -366,7 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let bodyA = contact.bodyA
             let bodyB = contact.bodyB
             
-            if bodyA.categoryBitMask == darkThunder.physicsBody?.categoryBitMask && bodyB.categoryBitMask == block.physicsBody?.categoryBitMask || bodyA.categoryBitMask == block.physicsBody?.categoryBitMask && bodyB.categoryBitMask == darkThunder.physicsBody?.categoryBitMask {
+            if bodyA.categoryBitMask == PhysicsCategory.Player && bodyB.categoryBitMask == PhysicsCategory.Block || bodyA.categoryBitMask == PhysicsCategory.Block && bodyB.categoryBitMask == PhysicsCategory.Player {
                 block.removeFromParent()
             }
         }
