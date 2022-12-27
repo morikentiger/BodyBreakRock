@@ -94,8 +94,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            self.addChild(block[i])
 //            block[i].position = CGPointMake(0, CGFloat(-500+i*50))
 //        }
-        for x in 0..<10 {
-            for y in 0..<10 {
+        for y in 0..<100 {
+            for x in 0..<10 {
                 let block = SKSpriteNode(imageNamed: "block")
                 block.position = CGPoint(x: -250+x*50, y: -250+y*50)
                 blocks.append(block)
