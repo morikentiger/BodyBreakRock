@@ -23,6 +23,7 @@
 		71B6B81829597454000C1659 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 71B6B81629597454000C1659 /* Assets.xcassets */; };
 		71B6B81A29599300000C1659 /* ChargeParticleBlue.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71B6B81929599300000C1659 /* ChargeParticleBlue.sks */; };
 		71B6B81C29599389000C1659 /* ChargeParticleYellow.sks in Resources */ = {isa = PBXBuildFile; fileRef = 71B6B81B29599389000C1659 /* ChargeParticleYellow.sks */; };
+		71B6B81E295BCC2D000C1659 /* 打撃4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 71B6B81D295BCC2C000C1659 /* 打撃4.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		71B6B81629597454000C1659 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		71B6B81929599300000C1659 /* ChargeParticleBlue.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChargeParticleBlue.sks; sourceTree = "<group>"; };
 		71B6B81B29599389000C1659 /* ChargeParticleYellow.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = ChargeParticleYellow.sks; sourceTree = "<group>"; };
+		71B6B81D295BCC2C000C1659 /* 打撃4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "打撃4.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +93,7 @@
 				71173BFD2957493C00419B98 /* Assets.xcassets */,
 				71173BFF2957493C00419B98 /* LaunchScreen.storyboard */,
 				71173C0F2957FBB400419B98 /* BecomingTense.mp3 */,
+				71B6B81D295BCC2C000C1659 /* 打撃4.mp3 */,
 			);
 			path = BodyBreakRock;
 			sourceTree = "<group>";
@@ -163,6 +166,7 @@
 				71173C012957493C00419B98 /* LaunchScreen.storyboard in Resources */,
 				71173C102957FBB400419B98 /* BecomingTense.mp3 in Resources */,
 				71173C082957544D00419B98 /* MyScene.sks in Resources */,
+				71B6B81E295BCC2D000C1659 /* 打撃4.mp3 in Resources */,
 				71173BF52957493A00419B98 /* Actions.sks in Resources */,
 				71B6B81729597454000C1659 /* ChargeParticleRed.sks in Resources */,
 			);

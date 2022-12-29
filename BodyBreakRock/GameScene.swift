@@ -27,6 +27,13 @@ import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
+    private var cameraNode: SKCameraNode!
+    
+    private var elapsedTime: TimeInterval = 0
+    private let duration: TimeInterval = 100 // 揺れる持続時間
+    private let strength: CGFloat = 500 // 揺れる強さ
+
+    
     let base = SKSpriteNode(imageNamed: "JoystickBase")
     let pad = SKSpriteNode(imageNamed: "JoystickPad")
     let jumpButton = SKSpriteNode(imageNamed: "JumpButton")
@@ -73,11 +80,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var chargeLevel = 0
     
     var player:AVAudioPlayer!
+    var playerSE:AVAudioPlayer!
     
     let labelIsBreakButtonPressed = SKLabelNode(fontNamed: "Chalkduster")
     let labelScore = SKLabelNode(fontNamed: "Chalkduster")
+    
+//    let urlSE = Bundle.main.bundleURL.appendingPathComponent("打撃4.mp3")
+    let sound = SKAction.playSoundFileNamed("打撃4.mp3", waitForCompletion: false)
+    
+    let xv = CGFloat(UIScreen.main.bounds.size.width)
+    let yv = CGFloat(UIScreen.main.bounds.size.height)
 
     override func sceneDidLoad() {
+        
+        self.anchorPoint = CGPointMake(0.5, 0.5)
+        
+        cameraNode = SKCameraNode()
+        cameraNode.position = CGPoint(x: 0,//self.size.width / 2,
+                                      y: 0)//self.size.height / 2)
+        addChild(cameraNode)
+        camera = cameraNode
         
         labelIsBreakButtonPressed.text = "nil"
         labelIsBreakButtonPressed.fontSize = 39
@@ -92,7 +114,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.backgroundColor = SKColor.brown
         
-        self.anchorPoint = CGPointMake(0.5, 0.5)
+        
         
         
 //        for i in 0...9 {
@@ -185,6 +207,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } catch {
             print(error)
         }
+        
+        
+        
     }
     
     
@@ -271,7 +296,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if isBreakButtonPressed {
 //            darkThunder.position.x += moveBreakButton
-            let moveBreak:SKAction = SKAction.move(to: CGPoint(x: cursor.position.x, y: cursor.position.y), duration: 0.2)
+            let moveBreak:SKAction = SKAction.move(to: CGPoint(x: cursor.position.x, y: cursor.position.y), duration: 0.3)
             moveBreak.timingMode = .easeOut
             
             darkThunder.run(moveBreak)
@@ -369,6 +394,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if !(darkThunder.position.y > -self.size.height/2 + darkThunder.size.height/2) {
             darkThunder.position.y = -self.size.height/2 + darkThunder.size.height/2
         }
+        
+        if !(cursor.position.x < self.size.width/2 - cursor.size.width/2) {
+            cursor.position.x = self.size.width/2 - cursor.size.width/2
+        }
+        if !(cursor.position.x > -self.size.width/2 + cursor.size.width/2) {
+            cursor.position.x = -self.size.width/2 + cursor.size.width/2
+        }
+        if !(cursor.position.y < self.size.height/2 - cursor.size.height/2) {
+            cursor.position.y = self.size.height/2 - cursor.size.height/2
+        }
+        if !(cursor.position.y > -self.size.height/2 + cursor.size.height/2) {
+            cursor.position.y = -self.size.height/2 + cursor.size.height/2
+        }
     }
     
     override func didSimulatePhysics() {
@@ -404,7 +442,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 blockA.removeFromParent()
 //                blockB.removeFromParent()
                 score += 100
+//                quakeCamera()
+//                shakeCamera(cameraNode: cameraNode, duration: 0.1, strength: 1)
+//                shakeCameraRandom(cameraNode: cameraNode)
+                sceneShake()
                 
+                run(sound)
+//                do {
+//                    try playerSE = AVAudioPlayer(contentsOf:urlSE)
+//                    //音楽を再生する。
+//                    playerSE.play()
+//                } catch {
+//                    print(error)
+//                }
             }
 //        }
         // 衝突が発生したときに呼ばれるメソッド
@@ -450,6 +500,82 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+//    func quakeCamera() {
+//
+//        for i in -500...500 {
+//            score += 100000
+//            var time  = sin(CGFloat(i))
+////            cameraNode.yScale = sin(time)
+//            cameraNode.position = CGPoint(x: 0, y: sin(time) * 500)
+//        }
+//        cameraNode.position = CGPoint(x: 0, y: 0)
+//    }
+//
+//    // カメラを揺らす関数
+//    func shakeCamera(cameraNode: SKCameraNode, duration: TimeInterval, strength: CGFloat) {
+//
+////        score += 100000
+//        // 揺れる持続時間を計測するための変数
+//        var elapsedTime: TimeInterval = 0
+//
+//        // 揺れる持続時間内で繰り返し処理を行う
+//        while elapsedTime < duration {
+//            // 揺れる持続時間を超えるまでカメラを揺らす
+//            let time = elapsedTime / duration
+//            cameraNode.position = CGPoint(x: sin(time) * strength, y: sin(time) * strength)
+//
+//            // 次のフレームまで待つ
+//            run(SKAction.wait(forDuration: 1 / 60))
+//
+//            elapsedTime += 1 / 60
+//        }
+//
+//        // 揺れる持続時間を超えたらカメラを元の位置に戻す
+//        cameraNode.position = CGPoint(x: 0, y: 0)
+//    }
+//
+//    // カメラを揺らす関数
+//    func shakeCameraRandom(cameraNode: SKCameraNode) {
+//
+//        score += 100000
+//
+//        // 揺れる持続時間を1〜3秒の範囲でランダムに設定する
+//        let duration = TimeInterval.random(in: 1...3)
+//
+//        // 揺れる強さを50〜100の範囲でランダムに設定する
+//        let strength = CGFloat.random(in: 0.1...10)
+//
+//        // 揺れる持続時間を計測するための変数
+//        var elapsedTime: TimeInterval = 0
+//
+//        // 揺れる持続時間内で繰り返し処理を行う
+//        while elapsedTime < duration {
+//            // 揺れる持続時間を超えるまでカメラを揺らす
+//            let time = elapsedTime / duration
+//            cameraNode.position = CGPoint(x: CGFloat.random(in: -strength...strength), y: CGFloat.random(in: -strength...strength))
+//
+//            // 次のフレームまで待つ
+//            run(SKAction.wait(forDuration: 1 / 60))
+//
+//            elapsedTime += 1 / 60
+//        }
+//
+//        // 揺れる持続時間を超えたらカメラを元の位置に戻す
+//        cameraNode.position = CGPoint(x: 0, y: 0)
+//    }
+    
+    func sceneShake() {
+        let sceneView = self.scene!.view! as UIView
+        let shakeAnimation = CABasicAnimation(keyPath: "position")
+        let intensity = CGVector(dx:xv/90,dy:-xv/90)
+        shakeAnimation.duration = 0.2 / Double(3)
+        shakeAnimation.repeatCount = Float(3)
+        shakeAnimation.autoreverses = true
+        shakeAnimation.fromValue = NSValue(cgPoint: CGPoint(x: sceneView.center.x-intensity.dx, y: sceneView.center.y-intensity.dy))
+        shakeAnimation.toValue = NSValue(cgPoint: CGPoint(x: sceneView.center.x + intensity.dx, y: sceneView.center.y + intensity.dy))
+        sceneView.layer.add(shakeAnimation,forKey: "position")
+    }
+    
     override func update(_ currentTime: TimeInterval) {
         changeButtonAlpha()
         updateChargeEffect()
@@ -457,6 +583,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 //        labelIsBreakButtonPressed.text = "\(isBreakButtonPressed)"
         labelScore.text = "Score:\(score)"
+        
+        elapsedTime += currentTime //- previousTime
+        if elapsedTime >= duration {
+            // 揺れる持続時間を超えたらカメラを元の位置に戻す
+            cameraNode.position = CGPoint(x: 0, y: 0)
+        } else {
+            // カメラを揺らす
+            let time = elapsedTime / duration
+            cameraNode.position = CGPoint(x: 0, y: sin(time) * strength)
+        }
     
     }
 }
